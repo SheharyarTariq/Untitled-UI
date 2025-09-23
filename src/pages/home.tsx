@@ -1,6 +1,8 @@
 import ClientInsurerBroker from "@/components/claim/client-insurer-broker";
 import PanelSolicitorDetails from "@/components/claim/panel-solicitor-details";
 import { useState } from "react";
+import { menuItems } from "./constants";
+import NewClaim from "@/components/claim/new-claim";
 
 const GeneralDetails = () => <div>General Details Form</div>;
 const ReferrerDetails = () => <div>Referrer Details Form</div>;
@@ -8,21 +10,6 @@ const ClientDetails = () => <div>Client Details Form</div>;
 
 export const HomeScreen = () => {
   const [activeForm, setActiveForm] = useState("General Details");
-
-  const menuItems = [
-    "General Details",
-    "Referrer Details",
-    "Client Details",
-    "Accident Details",
-    "Vehicle Details",
-    "Vehicle Owner",
-    "Engineer Details",
-    "Client Insurer & Broker",
-    "Panel Solicitor Details",
-    "Storage & Recovery",
-    "Vehicle Damage Details",
-    "Third Party & Insurer",
-  ];
 
   const renderForm = () => {
     switch (activeForm) {
@@ -42,6 +29,20 @@ export const HomeScreen = () => {
   };
 
   return (
+    <>
+      <NewClaim />
+      <div className="w-full flex md:hidden overflow-auto px-4">
+        {menuItems.map((item) => (
+          <button
+            key={item}
+            onClick={() => setActiveForm(item)}
+            className={`font-sm px-3 py-1 rounded whitespace-nowrap
+              ${activeForm === item ? "border border-brand-solid text-purple-800 font-semibold" : "text-gray-500 "}`}
+          >
+            {item}
+          </button>
+        ))}
+      </div>
     <div className="flex h-screen md:px-28">
       {/* Sidebar */}
       <div className="w-64 p-4 hidden md:block">
@@ -62,5 +63,6 @@ export const HomeScreen = () => {
         {renderForm()}
       </div>
     </div>
+    </>
   );
 };
